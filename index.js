@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const mongoose = require("mongoose");
 
-const mongooseUri = "mongodb+srv://testMongoDBUserName:8L4kkR8KszHZTI7S@cluster0.fei8p8f.mongodb.net/movieDatabase"
+const mongooseUri = "mongodb+srv://MovieCRUDUser:2cXNj2TeRSsHaniL@cluster0.71bgnhg.mongodb.net/movieDatabase"
 mongoose.connect(mongooseUri, {useNewUrlParser: true}, {useUnifiedTopology: true})
 const movieSchema = {
 	title: String,
@@ -48,10 +48,55 @@ app.get("/read", function(request, response) {
 
 // Todo: Implement your own MongoDB Atlas Organization, Project, Database Cluster, Database, and Collection.
 // Todo: Implement and test the Update and Delete functionCRUD.
+// Update route called from update.html
+app.get("/update", function(req, res) {
+	res.sendFile(__dirname + "/client/update.html");
+});
 
+app.post("/update", async function(req, res) {
+	// This is a placeholder for the update functionality.
+	const { id, title, comments } = req.body;
+	if (!id || !title || !comments) {
+		return res.status(400).send("Missing required fields: id, title, or comments.");
+	}
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res.status(400).send("Invalid ID format.");
+	}
+	try {
+		await Movie.updateOne({ _id: id }, { title, comments });
+		res.redirect("/read");
+	} catch (error) {
+		res.status(500).send("Error updating movie: " + error.message);
+	}
+});
+
+// Delete route called from delete.html
+app.get("/delete", function(req, res) {
+	res.sendFile(__dirname + "/client/delete.html");
+});
+
+app.post("/delete", async function(req, res) {
+	// This is a placeholder for the delete functionality.
+	const title = req.body.title;
+	if (!title) {
+		return res.status(400).send("Missing required field: title.");
+	}
+
+		try {
+			const result = await Movie.deleteOne({ title: title });
+			if (result.deletedCount === 0) {
+				return res.status(404).send("Movie not found.");
+			}
+			res.redirect("/read");
+		} catch (error) {
+			res.status(500).send("Error deleting movie: " + error.message);
+		}
+	});
+
+		
 // End MongoDB Atlas ********
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 app.get('/test', function(request, response) {
 	response.type('text/plain')
 	response.send('Node.js and Express running on port='+port)

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Update Movie</title>
+</head>
+<body>
+    <p><a href="/">Go to Homepage</a></p>
+    <p><a href="/read">View All Movies</a></p>
+	<h1>Update Movie</h1>
+    <p>Enter the movie ID, title, and comments to update a movie in the database.</p>
+    <p>Note: This action will update the movie details in the database.</p>
+    <form method="post" action="/update">
+        <label for="id">Movie ID:</label><br />
+        <input type="text" id="id" name="id" required /><br /><br />
+        <label for="title">Movie Title:</label><br />
+        <input type="text" id="title" name="title" required /><br /><br />
+        <label for="comments">Comments:</label><br />
+        <input type="text" id="comments" name="comments" required /><br /><br />
+        <button type="submit">Update Movie</button>
+</body>
+</html>

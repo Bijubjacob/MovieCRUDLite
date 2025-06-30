@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delete Movie</title>
+</head>
+<body>
+	<p><a href="/">Go to Homepage</a></p>
+	<p><a href="/read">View All Movies</a></p>
+	<h1>Delete Movie</h1>
+	<p>Enter the movie ID, title, and comments to delete a movie from the database.</p>
+	<p>Note: This action will permanently remove the movie from the database.</p>
+	<form method="post" action="/delete">
+		<label for="title">Movie Title:</label><br />
+		<input type="text" id="title" name="title" required /><br /><br />
+		<button type="submit">Delete Movie</button>
+	  </form>
+</body>
+</html>
